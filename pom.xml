@@ -69,8 +69,12 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut.openapi</groupId>
+      <artifactId>micronaut-openapi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.openapi</groupId>
       <artifactId>micronaut-openapi-annotations</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut.micrometer</groupId>
