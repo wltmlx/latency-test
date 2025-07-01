@@ -149,10 +149,10 @@ public class TestExecutionService {
     private PreparedStatement prepareStatement(Connection connection, String query) throws SQLException {
         JdbcConfiguration config = jdbcConfigurationService.getCurrentConfiguration();
         PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setFetchSize(config.fetchSize());
+        stmt.setFetchSize(config.getFetchSize());
         
-        if (config.queryTimeout() > 0) {
-            stmt.setQueryTimeout(config.queryTimeout());
+        if (config.getQueryTimeout() > 0) {
+            stmt.setQueryTimeout(config.getQueryTimeout());
         }
         
         return stmt;
