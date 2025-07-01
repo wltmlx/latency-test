@@ -1,0 +1,21 @@
+apiVersion: v2
+name: as400-jdbc-tester
+description: A Helm chart for AS400 JDBC Performance Tester
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - as400
+  - jdbc
+  - performance
+  - testing
+  - database
+home: https://github.com/wltmlx/latency-test
+sources:
+  - https://github.com/wltmlx/latency-test
+maintainers:
+  - name: AS400 Performance Team
+    email: team@example.com
+annotations:
+  category: Database
+  licenses: MIT

@@ -1,0 +1,152 @@
+# Default values for as400-jdbc-tester
+replicaCount: 1
+
+image:
+  repository: as400-jdbc-tester
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: as400-jdbc-tester.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# JDBC Configuration
+jdbc:
+  # Connection details - these should be overridden in production
+  url: "jdbc:as400://sitest.lkw-walter.com"
+  username: "dataopsetl"
+  password: "password"
+  driverClassName: "com.ibm.as400.access.AS400JDBCDriver"
+  
+  # Performance settings
+  poolSize: 10
+  connectionTimeout: 30000
+  socketTimeout: 0
+  tcpNoDelay: true
+  autoCommit: true
+  batchSize: 100
+  fetchSize: 1000
+  queryTimeout: 0
+  threadUsed: true
+  naming: "sql"
+  libraries: ""
+  cursorHold: true
+  extendedDynamic: true
+  blockSize: 512
+  statementCache: true
+
+# Application configuration
+app:
+  port: 8080
+  logLevel: INFO
+
+# Health checks
+healthCheck:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# Monitoring
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    path: /prometheus
+    port: 8080
+
+# Persistence for temporary files
+persistence:
+  enabled: false
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
+# Extra environment variables
+extraEnvVars: []
+# - name: CUSTOM_VAR
+#   value: "custom_value"
+
+# Extra volumes
+extraVolumes: []
+# - name: extra-volume
+#   emptyDir: {}
+
+# Extra volume mounts
+extraVolumeMounts: []
+# - name: extra-volume
+#   mountPath: /extra-volume
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+  # maxUnavailable: 1

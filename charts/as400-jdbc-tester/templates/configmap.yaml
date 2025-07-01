@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "as400-jdbc-tester.fullname" . }}-config
+  labels:
+    {{- include "as400-jdbc-tester.labels" . | nindent 4 }}
+data:
+  # JDBC Configuration
+  JDBC_URL: {{ .Values.jdbc.url | quote }}
+  JDBC_DRIVER_CLASS: {{ .Values.jdbc.driverClassName | quote }}
+  JDBC_POOL_SIZE: {{ .Values.jdbc.poolSize | quote }}
+  JDBC_CONNECTION_TIMEOUT: {{ .Values.jdbc.connectionTimeout | quote }}
+  JDBC_SOCKET_TIMEOUT: {{ .Values.jdbc.socketTimeout | quote }}
+  JDBC_TCP_NO_DELAY: {{ .Values.jdbc.tcpNoDelay | quote }}
+  JDBC_AUTO_COMMIT: {{ .Values.jdbc.autoCommit | quote }}
+  JDBC_BATCH_SIZE: {{ .Values.jdbc.batchSize | quote }}
+  JDBC_FETCH_SIZE: {{ .Values.jdbc.fetchSize | quote }}
+  JDBC_QUERY_TIMEOUT: {{ .Values.jdbc.queryTimeout | quote }}
+  JDBC_THREAD_USED: {{ .Values.jdbc.threadUsed | quote }}
+  JDBC_NAMING: {{ .Values.jdbc.naming | quote }}
+  JDBC_LIBRARIES: {{ .Values.jdbc.libraries | quote }}
+  JDBC_CURSOR_HOLD: {{ .Values.jdbc.cursorHold | quote }}
+  JDBC_EXTENDED_DYNAMIC: {{ .Values.jdbc.extendedDynamic | quote }}
+  JDBC_BLOCK_SIZE: {{ .Values.jdbc.blockSize | quote }}
+  JDBC_STATEMENT_CACHE: {{ .Values.jdbc.statementCache | quote }}
